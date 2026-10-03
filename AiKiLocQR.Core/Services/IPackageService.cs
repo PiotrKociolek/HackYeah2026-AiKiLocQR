@@ -4,7 +4,7 @@ namespace AiKiLocQR.Core.Services
 {
     public interface IPackageService
     {
-        void CreatePackage(IEnumerable<string> filePaths, string outputPackagePath, string password);
-        void ExtractPackage(string packagePath, string outputDirectory, string password);
+        void CreatePackage(IEnumerable<string> filePaths, string outputPackagePath);
+        void ExtractPackage(string packagePath, string outputDirectory);
     }
 }

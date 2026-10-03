@@ -18,7 +18,7 @@ namespace AiKiLocQR.Core.Services
             _cryptoProvider = cryptoProvider;
         }
 
-        public void CreatePackage(IEnumerable<string> filePaths, string outputPackagePath, string password)
+        public void CreatePackage(IEnumerable<string> filePaths, string outputPackagePath)
         {
             var manifest = new PackageManifest();
             using var memoryStream = new MemoryStream();
@@ -52,13 +52,13 @@ namespace AiKiLocQR.Core.Services
             }
 
             byte[] zipBytes = memoryStream.ToArray();
-            var encryptedFormat = _cryptoProvider.Encrypt(zipBytes, password);
+            var encryptedFormat = _cryptoProvider.Encrypt(zipBytes);
 
             string packageJson = JsonSerializer.Serialize(encryptedFormat);
             File.WriteAllText(outputPackagePath, packageJson);
         }
 
-        public void ExtractPackage(string packagePath, string outputDirectory, string password)
+        public void ExtractPackage(string packagePath, string outputDirectory)
         {
             if (!File.Exists(packagePath)) throw new FileNotFoundException("Package not found");
 
@@ -66,7 +66,7 @@ namespace AiKiLocQR.Core.Services
             var encryptedFormat = JsonSerializer.Deserialize<EncryptedPackageFormat>(json) 
                 ?? throw new InvalidDataException("Invalid package format.");
 
-            byte[] decryptedZipBytes = _cryptoProvider.Decrypt(encryptedFormat, password);
+            byte[] decryptedZipBytes = _cryptoProvider.Decrypt(encryptedFormat);
 
             Directory.CreateDirectory(outputDirectory);
 

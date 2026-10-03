@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace AiKiLocQR.WPF
+namespace AiKiLocQR.Corp
 {
     public partial class App : Application
     {

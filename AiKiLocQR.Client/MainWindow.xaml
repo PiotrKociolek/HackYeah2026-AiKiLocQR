@@ -1,0 +1,18 @@
+<Window x:Class="AiKiLocQR.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AiKiLocQR - Nadawca (Klient)" Height="450" Width="600">
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Kreator Bezpiecznej Paczki Danych" FontSize="26" FontWeight="Bold" Margin="0,0,0,30" HorizontalAlignment="Center" />
+            
+            <TextBlock Text="1. Wybierz pliki, które chcesz nam przesłać." FontSize="18" Margin="0,0,0,10" />
+            <Button x:Name="BtnSelectFiles" Content="Wybierz pliki" Width="200" Height="50" FontSize="16" Click="BtnSelectFiles_Click" Margin="0,0,0,20"/>
+            
+            <ListBox x:Name="ListSelectedFiles" Height="100" Margin="0,0,0,20" />
+            
+            <TextBlock Text="2. Spakuj i zabezpiecz paczkę." FontSize="18" Margin="0,0,0,10" />
+            <Button x:Name="BtnEncrypt" Content="Utwórz bezpieczną paczkę" Width="250" Height="50" FontSize="16" Background="#FF4CAF50" Foreground="White" Click="BtnEncrypt_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
