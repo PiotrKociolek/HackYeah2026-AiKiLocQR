@@ -1,29 +1,20 @@
 <Window x:Class="AiKiLocQR.Corp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AiKiLocQR - Odbiorca (Korporacja)" Height="600" Width="800">
+        Title="AiKiLocQR - Odbiorca (Korporacja)" Height="450" Width="600">
     <Grid>
         <TabControl x:Name="MainTabs">
             <TabItem Header="Dashboard">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock Text="AiKiLocQR Offline Security Vault - Odbiorca" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" />
-                    <TextBlock Text="Włóż swój MasterKey USB i zeskanuj kod QR za pomocą aplikacji mobilnej, aby zdeszyfrować otrzymaną paczkę." FontSize="14" />
+                    <TextBlock Text="AiKiLocQR Offline Security Vault" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" />
+                    <TextBlock Text="Włóż swój MasterKey USB do komputera, a następnie odszyfruj paczki od klientów." FontSize="14" />
                 </StackPanel>
             </TabItem>
             
             <TabItem Header="Decrypt Package">
                 <StackPanel Margin="20" HorizontalAlignment="Center">
-                    <TextBlock Text="1. Wybierz paczkę do odszyfrowania" FontSize="18" FontWeight="Bold" />
-                    <Button x:Name="BtnSelectPackage" Content="Wybierz plik .aikilocpkg" Width="200" Height="40" Margin="0,10,0,10" Click="BtnSelectPackage_Click"/>
-                    <TextBlock x:Name="TxtSelectedPackage" Text="Brak wybranej paczki" Foreground="Gray" Margin="0,0,0,20" HorizontalAlignment="Center"/>
-                    
-                    <TextBlock Text="2. Autoryzacja QR" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <Image x:Name="ImgQrChallenge" Width="200" Height="200" Margin="0,10,0,10" />
-                    
-                    <TextBlock Text="Wklej podpis z urządzenia Android (wersja deweloperska bez kamerki PC):" Margin="0,10,0,5" />
-                    <TextBox x:Name="TxtQrResponse" Height="30" Width="300" Margin="0,0,0,10" />
-                    
-                    <Button x:Name="BtnVerifyAndDecrypt" Content="Weryfikuj &amp; Odszyfruj" Width="200" Height="40" Click="BtnVerifyAndDecrypt_Click"/>
+                    <TextBlock Text="Odszyfrowywanie paczki" FontSize="18" FontWeight="Bold" Margin="0,0,0,20" />
+                    <Button x:Name="BtnSelectPackage" Content="Wybierz i odszyfruj plik .aikilocpkg" Width="250" Height="50" FontSize="14" Background="#FF4CAF50" Foreground="White" Click="BtnSelectPackage_Click"/>
                 </StackPanel>
             </TabItem>
         </TabControl>

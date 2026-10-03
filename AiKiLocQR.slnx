@@ -1,5 +1,4 @@
 <Solution>
-  <Project Path="AiKiLocQR.Mobile/AiKiLocQR.Mobile.csproj" />
   <Project Path="AiKiLocQR.Client/AiKiLocQR.Client.csproj" />
   <Project Path="AiKiLocQR.Core/AiKiLocQR.Core.csproj" />
   <Project Path="AiKiLocQR.Corp/AiKiLocQR.Corp.csproj" />
