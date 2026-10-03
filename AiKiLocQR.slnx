@@ -2,4 +2,5 @@
   <Project Path="AiKiLocQR/AiKiLocQR.csproj" />
   <Project Path="AiKiLocQR.Maui/AiKiLocQR.Maui.csproj" />
   <Project Path="AiKiLocQR.Shared/AiKiLocQR.Shared.csproj" />
+  <Project Path="AiKiLocQR.Shared.Tests/AiKiLocQR.Shared.Tests.csproj" />
 </Solution>
