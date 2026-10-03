@@ -8,6 +8,7 @@ using AiKiLocQR.Core.Models;
 using AiKiLocQR.Core.Security;
 using System.Linq;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.ApplicationModel;
 
 #if ANDROID
 using Android.Graphics;
@@ -26,15 +27,29 @@ namespace AiKiLocQR.Mobile
             _authenticator = new QrAuthenticator();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-            BarcodeReader.Options = new BarcodeReaderOptions
+            
+            var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+            if (status != PermissionStatus.Granted)
             {
-                Formats = BarcodeFormats.All,
-                AutoRotate = true,
-                Multiple = false
-            };
+                status = await Permissions.RequestAsync<Permissions.Camera>();
+            }
+
+            if (status == PermissionStatus.Granted)
+            {
+                BarcodeReader.Options = new BarcodeReaderOptions
+                {
+                    Formats = BarcodeFormats.All,
+                    AutoRotate = true,
+                    Multiple = false
+                };
+            }
+            else
+            {
+                await DisplayAlert("Brak uprawnień", "Aplikacja wymaga dostępu do kamery, aby skanować kody QR.", "OK");
+            }
         }
 
         private void BarcodesDetected(object sender, BarcodeDetectionEventArgs e)
