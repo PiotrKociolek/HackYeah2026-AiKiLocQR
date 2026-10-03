@@ -77,6 +77,50 @@ namespace AiKiLocQR.Shared.Tests
             Assert.ThrowsAny<Exception>(() => _vaultManager.OpenVault("strongpassword", _testPath));
         }
 
+        [Fact]
+        public void Lockdown_ShouldTriggerAfter3FailedAttempts()
+        {
+            _vaultManager.CreateVault("strongpassword", _testPath);
+            _vaultManager.CloseVault();
+
+            // Attempt 1
+            Assert.ThrowsAny<CryptographicException>(() => _vaultManager.OpenVault("wrong1", _testPath));
+            // Attempt 2
+            Assert.ThrowsAny<CryptographicException>(() => _vaultManager.OpenVault("wrong2", _testPath));
+            // Attempt 3
+            Assert.ThrowsAny<CryptographicException>(() => _vaultManager.OpenVault("wrong3", _testPath));
+
+            // Attempt 4 should be InvalidOperationException (Lockdown)
+            var ex = Assert.Throws<InvalidOperationException>(() => _vaultManager.OpenVault("strongpassword", _testPath));
+            Assert.Contains("LOCKDOWN mode", ex.Message);
+        }
+
+        [Fact]
+        public void RecoveryKey_ShouldUnlockLockdown()
+        {
+            _vaultManager.CreateVault("strongpassword", _testPath);
+            string recoveryPath = Path.Combine(Path.GetTempPath(), $"recovery_{Guid.NewGuid()}.key");
+            _vaultManager.GenerateRecoveryKey(recoveryPath);
+            _vaultManager.CloseVault();
+
+            // Lock it down
+            for (int i = 0; i < 3; i++)
+            {
+                Assert.ThrowsAny<CryptographicException>(() => _vaultManager.OpenVault("wrong", _testPath));
+            }
+            Assert.Throws<InvalidOperationException>(() => _vaultManager.OpenVault("strongpassword", _testPath)); // locked down
+
+            // Unlock
+            var manager2 = new VaultManager();
+            manager2.UnlockWithRecoveryKey(_testPath, recoveryPath);
+
+            // Now should open with correct password
+            manager2.OpenVault("strongpassword", _testPath);
+            Assert.True(manager2.IsOpen);
+
+            if (File.Exists(recoveryPath)) File.Delete(recoveryPath);
+        }
+
         public void Dispose()
         {
             _vaultManager.CloseVault();
