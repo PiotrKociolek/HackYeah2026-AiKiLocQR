@@ -9,9 +9,9 @@
                 <TextBlock Text="Krok 1: Autoryzacja MasterKey" FontSize="26" FontWeight="Bold" Margin="0,0,0,20" HorizontalAlignment="Center" />
                 <TextBlock Text="Zanim odszyfrujesz paczkę, załącz swój sprzętowy klucz MasterKey." FontSize="16" Margin="0,0,0,30" HorizontalAlignment="Center" />
                 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
-                    <Button x:Name="BtnLoadKey" Content="Załącz plik klucza z dysku" Width="220" Height="50" FontSize="14" Click="BtnLoadKey_Click" />
-                    <Button x:Name="BtnGenerateKey" Content="Wygeneruj nowy MasterKey" Width="220" Height="50" FontSize="14" Click="BtnGenerateKey_Click" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="BtnLoadKey" Content="Załącz plik klucza z dysku" Width="220" Height="50" FontSize="14" Margin="0,0,10,0" Click="BtnLoadKey_Click" />
+                    <Button x:Name="BtnGenerateKey" Content="Wygeneruj nowy MasterKey" Width="220" Height="50" FontSize="14" Margin="10,0,0,0" Click="BtnGenerateKey_Click" />
                 </StackPanel>
             </StackPanel>
         </Grid>
