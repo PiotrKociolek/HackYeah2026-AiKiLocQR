@@ -1,6 +1,7 @@
 <Solution>
-  <Project Path="AiKiLocQR/AiKiLocQR.csproj" />
-  <Project Path="AiKiLocQR.Maui/AiKiLocQR.Maui.csproj" />
-  <Project Path="AiKiLocQR.Shared/AiKiLocQR.Shared.csproj" />
-  <Project Path="AiKiLocQR.Shared.Tests/AiKiLocQR.Shared.Tests.csproj" />
+  <Project Path="AiKiLocQR.WPF/AiKiLocQR.WPF.csproj" />
+  <Project Path="AiKiLocQR.Mobile/AiKiLocQR.Mobile.csproj" />
+  <Project Path="AiKiLocQR.Core/AiKiLocQR.Core.csproj" />
+  <Project Path="AiKiLocQR.Crypto/AiKiLocQR.Crypto.csproj" />
+  <Project Path="AiKiLocQR.Tests/AiKiLocQR.Tests.csproj" />
 </Solution>

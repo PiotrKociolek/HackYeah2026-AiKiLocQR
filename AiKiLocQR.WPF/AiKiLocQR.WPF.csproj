@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\AiKiLocQR.Shared\AiKiLocQR.Shared.csproj" />
+    <ProjectReference Include="..\AiKiLocQR.Core\AiKiLocQR.Core.csproj" />
+    <ProjectReference Include="..\AiKiLocQR.Crypto\AiKiLocQR.Crypto.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
