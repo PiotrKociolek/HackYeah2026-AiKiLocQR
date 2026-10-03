@@ -1,5 +1,7 @@
 <Solution>
-  <Project Path="AiKiLocQR/AiKiLocQR.csproj" />
-  <Project Path="AiKiLocQR.Maui/AiKiLocQR.Maui.csproj" />
-  <Project Path="AiKiLocQR.Shared/AiKiLocQR.Shared.csproj" />
+  <Project Path="AiKiLocQR.Client/AiKiLocQR.Client.csproj" />
+  <Project Path="AiKiLocQR.Core/AiKiLocQR.Core.csproj" />
+  <Project Path="AiKiLocQR.Corp/AiKiLocQR.Corp.csproj" />
+  <Project Path="AiKiLocQR.Crypto/AiKiLocQR.Crypto.csproj" />
+  <Project Path="AiKiLocQR.Tests/AiKiLocQR.Tests.csproj" />
 </Solution>
