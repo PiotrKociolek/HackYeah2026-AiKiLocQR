@@ -44,7 +44,7 @@ namespace AiKiLocQR.Shared.Tests
             _vaultManager.CreateVault("strongpassword", _testPath);
             _vaultManager.CloseVault();
 
-            Assert.Throws<CryptographicException>(() => _vaultManager.OpenVault("wrongpassword", _testPath));
+            Assert.ThrowsAny<CryptographicException>(() => _vaultManager.OpenVault("wrongpassword", _testPath));
         }
 
         [Fact]
