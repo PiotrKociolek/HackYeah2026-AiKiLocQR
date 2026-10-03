@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace AiKiLocQR.Maui;
+namespace AiKiLocQR.Mobile;
 
 public partial class App : Application
 {
@@ -11,6 +11,6 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		return new Window(new AppShell());
+		return new Window(new MainPage());
 	}
 }
