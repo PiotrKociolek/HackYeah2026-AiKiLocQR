@@ -8,8 +8,11 @@
         <!-- Scanner View -->
         <zxing:CameraBarcodeReaderView
             x:Name="BarcodeReader"
+            CameraLocation="Rear"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
             BarcodesDetected="BarcodesDetected"
-            IsDetecting="True" />
+            IsDetecting="False" />
 
         <!-- Approval UI -->
         <Border x:Name="ApprovalOverlay" 

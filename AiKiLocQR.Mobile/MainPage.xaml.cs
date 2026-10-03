@@ -45,6 +45,7 @@ namespace AiKiLocQR.Mobile
                     AutoRotate = true,
                     Multiple = false
                 };
+                BarcodeReader.IsDetecting = true;
             }
             else
             {
