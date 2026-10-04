@@ -1,21 +1,235 @@
 <Window x:Class="AiKiLocQR.Client.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AiKiLocQR - Nadawca (Klient)" Height="450" Width="600" WindowStartupLocation="CenterScreen">
-    <Grid Margin="20">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Kreator Bezpiecznej Paczki Danych" FontSize="26" FontWeight="Bold" Margin="0,0,0,30" HorizontalAlignment="Center" />
-            
-            <TextBlock Text="1. Wybierz pliki, które chcesz do nas bezpiecznie wysłać:" FontSize="16" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-            <Button x:Name="BtnSelectFiles" Content="Wybierz pliki" Width="220" Height="40" FontSize="14" Click="BtnSelectFiles_Click" Margin="0,0,0,20"/>
-            
-            <ListBox x:Name="ListSelectedFiles" Height="100" Margin="0,0,0,20" Background="#F0F0F0" BorderBrush="#CCCCCC" BorderThickness="1"/>
-            
-            <TextBlock Text="2. Spakuj i zabezpiecz paczkę kryptograficznie:" FontSize="16" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-            <Button x:Name="BtnEncrypt" Content="Zabezpiecz i zapisz paczkę" Width="250" Height="50" FontSize="16" Background="#FF4CAF50" Foreground="White" Click="BtnEncrypt_Click"/>
-            
-            <TextBlock Text="Aplikacja nie wymaga od Ciebie żadnych haseł! Całość jest zabezpieczona naszym kluczem firmowym w tle." 
-                       FontSize="11" Foreground="Gray" Margin="0,20,0,0" HorizontalAlignment="Center" TextWrapping="Wrap"/>
-        </StackPanel>
+        Title="AiKiLocQR - Nadawca (Klient)"
+        Height="720" Width="680" MinHeight="640" MinWidth="600"
+        WindowStartupLocation="CenterScreen"
+        Background="#F1E9D8"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <!-- Paleta: granat, czerń, beż (papier) -->
+        <Color x:Key="NavyColor">#14213D</Color>
+        <SolidColorBrush x:Key="NavyBrush" Color="#14213D"/>
+        <SolidColorBrush x:Key="NavyHoverBrush" Color="#1F3157"/>
+        <SolidColorBrush x:Key="NavyPressedBrush" Color="#0B1530"/>
+        <SolidColorBrush x:Key="InkBrush" Color="#111111"/>
+        <SolidColorBrush x:Key="PaperBrush" Color="#F1E9D8"/>
+        <SolidColorBrush x:Key="PaperLightBrush" Color="#FAF6EC"/>
+        <SolidColorBrush x:Key="PaperBorderBrush" Color="#D8CBB0"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="#6B6454"/>
+
+        <!-- Przycisk główny -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource PaperLightBrush}"/>
+            <Setter Property="Background" Value="{StaticResource NavyBrush}"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                CornerRadius="6" Padding="24,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource NavyHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource NavyPressedBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Przycisk drugorzędny (kontur) -->
+        <Style x:Key="OutlineButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource NavyBrush}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="Transparent"
+                                BorderBrush="{StaticResource NavyBrush}" BorderThickness="1.5"
+                                CornerRadius="6" Padding="24,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#14213D12"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#14213D22"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Numer kroku -->
+        <Style x:Key="StepBadge" TargetType="Border">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Background" Value="{StaticResource NavyBrush}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="StepTitle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Georgia"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- NAGŁÓWEK -->
+        <Border Grid.Row="0" Background="#0B1530" Padding="36,26">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="A I K I L O C Q R" FontSize="11" FontWeight="SemiBold"
+                               Foreground="#B9AE94" Margin="0,0,0,6"/>
+                    <TextBlock Text="Kreator Bezpiecznej Paczki Danych" FontFamily="Georgia"
+                               FontSize="26" Foreground="#F1E9D8"/>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Text="合気道" FontFamily="Yu Mincho, MS Mincho, Segoe UI"
+                           FontSize="34" Foreground="#F1E9D8" Opacity="0.18"
+                           VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- TREŚĆ -->
+        <Grid Grid.Row="1" Margin="36,28,36,24">
+            <Border Background="{StaticResource PaperLightBrush}"
+                    BorderBrush="{StaticResource PaperBorderBrush}" BorderThickness="1"
+                    CornerRadius="10" Padding="32,28">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="28" ShadowDepth="4" Direction="270"
+                                      Color="#14213D" Opacity="0.14"/>
+                </Border.Effect>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Krok 1 -->
+                    <Grid Grid.Row="0" Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource StepBadge}" Margin="0,0,14,0">
+                            <TextBlock Text="1" Foreground="#F1E9D8" FontWeight="Bold" FontSize="14"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Grid.Column="1" Style="{StaticResource StepTitle}"
+                                   Text="Wybierz pliki, które chcesz do nas bezpiecznie wysłać"/>
+                    </Grid>
+
+                    <Button Grid.Row="1" x:Name="BtnSelectFiles" Content="Wybierz pliki"
+                            Style="{StaticResource OutlineButton}" HorizontalAlignment="Left"
+                            Width="200" Margin="0,0,0,14" Click="BtnSelectFiles_Click"/>
+
+                    <!-- Lista plików -->
+                    <Border Grid.Row="2" MinHeight="120" Margin="0,0,0,26"
+                            Background="{StaticResource PaperBrush}"
+                            BorderBrush="{StaticResource PaperBorderBrush}" BorderThickness="1"
+                            CornerRadius="6">
+                        <Grid>
+                            <ListBox x:Name="ListSelectedFiles" Background="Transparent"
+                                     BorderThickness="0" Padding="6"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="4,3">
+                                            <TextBlock Text="&#xE8A5;" FontFamily="Segoe MDL2 Assets"
+                                                       Foreground="#14213D" FontSize="14"
+                                                       VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                            <TextBlock Text="{Binding}" FontSize="13"
+                                                       Foreground="#111111" TextTrimming="CharacterEllipsis"
+                                                       MaxWidth="470" ToolTip="{Binding}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <!-- Pusta lista -->
+                            <TextBlock Text="Brak wybranych plików" FontStyle="Italic"
+                                       Foreground="{StaticResource MutedBrush}" FontSize="13"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       IsHitTestVisible="False">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Items.Count, ElementName=ListSelectedFiles}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <!-- Krok 2 -->
+                    <Grid Grid.Row="3" Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource StepBadge}" Margin="0,0,14,0">
+                            <TextBlock Text="2" Foreground="#F1E9D8" FontWeight="Bold" FontSize="14"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Grid.Column="1" Style="{StaticResource StepTitle}"
+                                   Text="Spakuj i zabezpiecz paczkę kryptograficznie"/>
+                    </Grid>
+
+                    <Button Grid.Row="4" x:Name="BtnEncrypt" Content="Zabezpiecz i zapisz paczkę"
+                            Style="{StaticResource PrimaryButton}" Click="BtnEncrypt_Click"/>
+
+                    <!-- Stopka -->
+                    <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0,22,0,0"
+                                HorizontalAlignment="Center">
+                        <TextBlock Text="&#xE72E;" FontFamily="Segoe MDL2 Assets" FontSize="13"
+                                   Foreground="{StaticResource MutedBrush}" Margin="0,2,8,0"
+                                   VerticalAlignment="Top"/>
+                        <TextBlock Text="Nie potrzebujesz żadnych haseł. Całość jest zabezpieczona kluczem firmowym w tle."
+                                   FontSize="12" Foreground="{StaticResource MutedBrush}"
+                                   TextWrapping="Wrap" MaxWidth="440"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

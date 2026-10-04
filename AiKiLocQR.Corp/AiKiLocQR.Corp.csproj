@@ -5,6 +5,10 @@
     <ProjectReference Include="..\AiKiLocQR.Crypto\AiKiLocQR.Crypto.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="assets\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>

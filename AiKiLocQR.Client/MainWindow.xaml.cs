@@ -47,13 +47,13 @@ namespace AiKiLocQR.Client
                 try
                 {
                     _packageService.CreatePackage(_selectedFiles, dlg.FileName);
-                    MessageBox.Show("Paczka została pomyślnie utworzona i zabezpieczona. Możesz ją teraz bezpiecznie wysłać e-mailem do firmy.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Paczka została pomyślnie utworzona i zabezpieczona. Możesz ją teraz bezpiecznie dostarczyć firmie.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
                     _selectedFiles.Clear();
-                    ListSelectedFiles.ItemsSource = null;
+                    ListSelectedFiles.ItemsSource = null; 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Błąd tworzenia paczki: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Błąd tworzenia paczki, proszęskontaktuj się z nami: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
